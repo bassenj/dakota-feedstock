@@ -43,7 +43,7 @@ requirements:
     - hdf5
         # - trilinos  # needs newer trilinos
   run:
-    - {{ pin_compatible("boost-cpp") }}
+    - boost-cpp {{ boost_cpp }}
     - python
     - {{ pin_compatible("numpy") }}
         # - trilinos
