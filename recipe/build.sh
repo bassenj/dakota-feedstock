@@ -30,4 +30,4 @@ cmake -D CMAKE_BUILD_TYPE:STRING=RELEASE \
       -D DAKOTA_PYTHON_SURROGATES:BOOL=ON \
       ..
 
-make -j${CPU_COUNT} install
+make VERBOSE=1 -j${CPU_COUNT} install
