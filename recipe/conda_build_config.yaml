@@ -1,11 +1,11 @@
 libblas:
-  - 3.8 *openblas
+  - 3.9 *openblas
 libcblas:
-  - 3.8 *openblas
+  - 3.9 *openblas
 liblapack:
-  - 3.8.0 *openblas
+  - 3.9 *openblas
 liblapacke:
-  - 3.8.0 *openblas
+  - 3.9 *openblas
 c_compiler_version:
   - '8'
 cxx_compiler_version:

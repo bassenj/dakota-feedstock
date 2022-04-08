@@ -53,7 +53,7 @@ test:
     - rosenbrock.py
   requires:
     - perl
-    - liblapack 3.8 *openblas
+    - liblapack
   imports:
     - dakota
     - dakota.interfacing
