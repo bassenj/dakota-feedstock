@@ -18,7 +18,7 @@ source:
     # - use_external_pybind11.patch
 
 build:
-  number: 3
+  number: 4
   skip: true  # [win or osx or py<38]
 
 requirements:
