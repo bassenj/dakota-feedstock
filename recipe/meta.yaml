@@ -1,6 +1,6 @@
 {% set name = "dakota" %}
-{% set version = "6.14.0" %}
-{% set sha256sum = "c3479ce49fc7a79df529ed052e809e4af2755f907734c802ccd609bbee220f8c" %}
+{% set version = "6.15.0" %}
+{% set sha256sum = "b6d971b7d6fe913aa64fef29cf8fcf55d0e5339f9f55fb164e3cc38716b48f61" %}
 
 package:
   name: {{ name }}
@@ -8,7 +8,7 @@ package:
 
 source:
   fn: dakota{{ version }}.tar.gz
-  url: https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-{{ version }}-release-public-src-cli.tar.gz
+  url: https://dakota.sandia.gov/sites/default/files/distributions/public/dakota-{{ version }}-public-src-cli.tar.gz
   sha256: {{ sha256sum }}
   patches:
     - surfpack_py_bindings.patch
