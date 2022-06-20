@@ -27,13 +27,13 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ compiler('fortran') }}
+    - mpi * {{ mpi }} # [mpi != 'nompi']
   host:
-    - openmpi
-    # - pybind11
-    - boost-cpp {{ boost_cpp }}
-    - libblas
-    - libcblas
-    - liblapack
+    - mpi * {{ mpi }} # [mpi != 'nompi']
+    - boost-cpp {{ boost_cpp }}.*
+    - libblas {{ libblas }}
+    - libcblas {{ libcblas }}
+    - liblapack {{ liblapack }}
     - python
     - perl
     - numpy {{ numpy }}
@@ -41,20 +41,17 @@ requirements:
     - doxygen
     - gsl
     - hdf5
-        # - trilinos  # needs newer trilinos
   run:
-    - boost-cpp {{ boost_cpp }}
+    - {{ pin_compatible("mpi") }} # [mpi != 'nompi']
+    - {{ pin_compatible("boost-cpp") }}
     - python
     - {{ pin_compatible("numpy") }}
-        # - trilinos
 test:
   files:
     - UQ.in
     - rosenbrock.py
   requires:
     - perl
-    - liblapack
-    - openmpi
   imports:
     - dakota
     - dakota.interfacing
@@ -62,7 +59,7 @@ test:
     - pysurfpack
   commands:
     - $PREFIX/share/dakota/test/dakota_test.perl --label-regex=AcceptanceTest
-    - $PREFIX/share/dakota/test/dakota_test.perl --label-regex=AcceptanceTest --parallel
+    - $PREFIX/share/dakota/test/dakota_test.perl --label-regex=AcceptanceTest --parallel # [mpi != 'nompi']
     - dakota -i UQ.in
 
 about:
