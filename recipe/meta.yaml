@@ -18,7 +18,7 @@ source:
     # - use_external_pybind11.patch
 
 build:
-  number: 4
+  number: 1
   skip: true  # [win or osx or py<38]
 
 requirements:
@@ -54,6 +54,7 @@ test:
   requires:
     - perl
     - liblapack
+    - openmpi
   imports:
     - dakota
     - dakota.interfacing
@@ -61,6 +62,7 @@ test:
     - pysurfpack
   commands:
     - $PREFIX/share/dakota/test/dakota_test.perl --label-regex=AcceptanceTest
+    - $PREFIX/share/dakota/test/dakota_test.perl --label-regex=AcceptanceTest --parallel
     - dakota -i UQ.in
 
 about:
