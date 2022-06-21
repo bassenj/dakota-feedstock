@@ -17,3 +17,6 @@ boost_cpp:
 mpi:
   - nompi
   - openmpi
+build_type:
+  - Debug
+  - RelWithDebInfo

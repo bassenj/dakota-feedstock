@@ -27,10 +27,10 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - {{ compiler('fortran') }}
-    - mpi * {{ mpi }} # [mpi != 'nompi']
+    - {{ mpi }} # [mpi != 'nompi']
   host:
-    - mpi * {{ mpi }} # [mpi != 'nompi']
-    - boost-cpp {{ boost_cpp }}.*
+    - {{ mpi }} # [mpi != 'nompi']
+    - boost-cpp {{ boost_cpp }}
     - libblas {{ libblas }}
     - libcblas {{ libcblas }}
     - liblapack {{ liblapack }}
@@ -42,15 +42,16 @@ requirements:
     - gsl
     - hdf5
   run:
-    - {{ pin_compatible("mpi") }} # [mpi != 'nompi']
-    - {{ pin_compatible("boost-cpp") }}
     - python
-    - {{ pin_compatible("numpy") }}
+    - {{ pin_compatible("boost-cpp", max_pin='x.x') }}
+    - {{ pin_compatible("numpy", max_pin='x.x') }}
+    - {{ pin_compatible("mpi", max_pin='x.x') }} # [mpi != 'nompi']
 test:
   files:
     - UQ.in
     - rosenbrock.py
   requires:
+    - cmake
     - perl
   imports:
     - dakota
@@ -58,9 +59,10 @@ test:
     - dakota.interfacing.dprepro
     - pysurfpack
   commands:
-    - $PREFIX/share/dakota/test/dakota_test.perl --label-regex=AcceptanceTest
-    - $PREFIX/share/dakota/test/dakota_test.perl --label-regex=AcceptanceTest --parallel # [mpi != 'nompi']
     - dakota -i UQ.in
+    - cmake -E copy_directory $PREFIX/share/dakota/test .
+    - ./dakota_test.perl --label-regex=AcceptanceTest
+    - ./dakota_test.perl --label-regex=AcceptanceTest --parallel # [mpi != 'nompi']
 
 about:
   home: https://dakota.sandia.gov

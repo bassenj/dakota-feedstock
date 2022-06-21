@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -ve
+
 mkdir -p build
 cd build
 
@@ -9,7 +11,25 @@ if [ `uname` = "Linux" ]; then
     FFLAGS="-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe"
 fi
 
-cmake -D CMAKE_BUILD_TYPE:STRING=Debug \
+if [ $mpi == "nompi" ]; then
+    DAKOTA_HAVE_MPI=OFF
+else
+    DAKOTA_HAVE_MPI=ON
+fi
+
+echo "DAKOTA_HAVE_MPI=$DAKOTA_HAVE_MPI"
+
+if [ ${build_type} == "Debug" ]; then
+    env | grep DEBUG
+    export DFFLAGS=${DEBUG_FFLAGS}
+    export FORTRANFLAGS=${DEBUG_FORTRANFLAGS}
+    export CXXFLAGS=${DEBUG_CXXFLAGS}
+    export CPPFLAGS=${DEBUG_CPPFLAGS}
+    export CFLAGS=${DEBUG_CFLAGS}
+fi
+
+
+cmake -D CMAKE_BUILD_TYPE:STRING=${build_type} \
       -D CMAKE_INSTALL_PREFIX:PATH=$PREFIX \
       -D DAKOTA_EXAMPLES_INSTALL:PATH=$PREFIX/share/dakota \
       -D DAKOTA_TEST_INSTALL:PATH=$PREFIX/share/dakota \
@@ -18,7 +38,7 @@ cmake -D CMAKE_BUILD_TYPE:STRING=Debug \
       -D DAKOTA_PYTHON_DIRECT_INTERFACE:BOOL=ON \
       -D DAKOTA_PYTHON_DIRECT_INTERFACE_NUMPY:BOOL=ON \
       -D HAVE_X_GRAPHICS:BOOL=OFF \
-      -D DAKOTA_HAVE_MPI:BOOL=ON \
+      -D DAKOTA_HAVE_MPI:BOOL=${DAKOTA_HAVE_MPI} \
       -D DAKOTA_HAVE_HDF5:BOOL=ON \
       -D HAVE_QUESO:BOOL=ON \
       -D DAKOTA_HAVE_GSL=ON \
