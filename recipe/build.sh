@@ -26,7 +26,7 @@ if [ ${build_type} == "Debug" ]; then
     CXXFLAGS=$(echo ${DEBUG_CXXFLAGS} | sed 's:-fvisibility-inlines-hidden ::')
     CPPFLAGS=$(echo ${DEBUG_CPPFLAGS} | sed 's:-fvisibility-inlines-hidden ::')
     CFLAGS=${DEBUG_CFLAGS}
-    LDFLAGS=$(echo $LDFLAGS | sed 's:-Wl,-O2 ::')
+    LDFLAGS="$(echo $LDFLAGS | sed 's:-Wl,-O2 ::') -Wl,-lrt"
     echo "+FFLAGS=$FFLAGS"
     echo "+FORTRANFLAGS=$FORTRANFLAGS"
     echo "+CXXFLAGS=$CXXFLAGS"
@@ -57,3 +57,5 @@ cmake -D CMAKE_BUILD_TYPE:STRING=${build_type} \
       ..
 
 make VERBOSE=1 -j${CPU_COUNT} install
+
+chmod u+x $PREFIX/share/dakota/test/dakota_test.perl
