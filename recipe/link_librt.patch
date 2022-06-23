@@ -1,16 +1,29 @@
 diff --git a/src/unit_test/CMakeLists.txt b/src/unit_test/CMakeLists.txt
-index 2010f145..faf2edc2 100644
+index f531f68e..476fdecf 100644
 --- a/src/unit_test/CMakeLists.txt
 +++ b/src/unit_test/CMakeLists.txt
-@@ -79,6 +79,11 @@ dakota_add_unit_test(NAME leja_sampling
+@@ -84,7 +84,8 @@ dakota_add_unit_test(NAME lhs_constants
+   SOURCES lhs_constants.cpp
+   LINK_DAKOTA_LIBS
    )
- target_link_libraries(leja_sampling Boost::boost)
+-target_link_libraries(lhs_constants Boost::boost)
++
++
  
+ # Unit test: h5py_hdf5
+ if(DAKOTA_H5PY_FOUND)
+@@ -110,6 +111,14 @@ dakota_add_unit_test(NAME response_io
+   )
+ target_link_libraries(response_io Boost::boost)
+ 
++target_link_libraries(lhs_constants Boost::boost)
 +target_link_libraries(min_unit_test "rt")
 +target_link_libraries(auto_unit_test "rt")
 +target_link_libraries(bootstrap_util_test "rt")
 +target_link_libraries(test_field_covariance_utils "rt")
++target_link_libraries(lhs_constants "rt")
++target_link_libraries(response_io "rt")
 +
- # Unit test: h5py_hdf5
- if(DAKOTA_HAVE_HDF5 AND Python_Interpreter_FOUND AND
-    Python_VERSION VERSION_GREATER 2.6)
+ # Unit test: experiment data and readers
+ # Demonstration of Teuchos test framework to driver several tests related to
+ # ExperimentData and associated file readers
