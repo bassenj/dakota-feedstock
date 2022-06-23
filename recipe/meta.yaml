@@ -1,6 +1,6 @@
 {% set name = "dakota" %}
-{% set version = "6.15.0" %}
-{% set sha256sum = "b6d971b7d6fe913aa64fef29cf8fcf55d0e5339f9f55fb164e3cc38716b48f61" %}
+{% set version = "6.16.0" %}
+{% set sha256sum = "49684ade2a937465d85b0fc69c96408be38bc1603ed2e7e8156d93eee3567d2f" %}
 
 package:
   name: {{ name }}
@@ -18,7 +18,7 @@ source:
     # - use_external_pybind11.patch
 
 build:
-  number: 1
+  number: 0
   skip: true  # [win or osx or py<38]
 
 requirements:
